@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import QRCode from "qrcode";
-import { Search, Droplets, CheckCircle, Clock, AlertCircle, QrCode } from "lucide-react";
+import { Search, Droplets, CheckCircle, Clock, AlertCircle, QrCode, MessageSquare } from "lucide-react";
 import { api } from "../api/client";
 
 interface TagihanDetail {
@@ -236,10 +236,44 @@ export const PublicCekTagihan: React.FC = () => {
                 </div>
 
                 {data.info_pembayaran.kontak_pengurus && (
-                  <p className="text-[11px] text-sky-800 pt-1 border-t border-sky-200">
-                    Konfirmasi Bukti Transfer via WhatsApp:{" "}
-                    <span className="font-bold text-sky-950">{data.info_pembayaran.kontak_pengurus}</span>
-                  </p>
+                  <div className="pt-2 border-t border-sky-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                      <span className="text-[10px] text-sky-800 font-bold uppercase tracking-wider block">
+                        Sudah Bayar? Konfirmasi ke Pengurus:
+                      </span>
+                      <span className="text-xs font-bold text-sky-950">
+                        {data.info_pembayaran.kontak_pengurus}
+                      </span>
+                    </div>
+
+                    {(() => {
+                      const digits = data.info_pembayaran.kontak_pengurus.replace(/\D/g, "");
+                      const phone = digits.startsWith("0") ? "62" + digits.slice(1) : digits;
+                      const nama = data.pelanggan.nama_pelanggan;
+                      const sr = data.pelanggan.nomor_sr;
+                      const tunggakan = new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                        maximumFractionDigits: 0,
+                      }).format(data.total_tunggakan);
+                      const text = encodeURIComponent(
+                        `Halo Pengurus TirtaDesa, saya warga:\n- Nama: ${nama}\n- No. SR: ${sr}\n- Total Tagihan: ${tunggakan}\n\nSaya sudah melakukan pembayaran melalui transfer/QRIS. Berikut saya lampirkan bukti transfernya. Mohon dikonfirmasi ya. Terima kasih!`
+                      );
+                      const waUrl = `https://wa.me/${phone}?text=${text}`;
+
+                      return (
+                        <a
+                          href={waUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center space-x-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition-colors shadow-sm"
+                        >
+                          <MessageSquare className="w-4 h-4" />
+                          <span>Kirim Bukti Bayar via WhatsApp</span>
+                        </a>
+                      );
+                    })()}
+                  </div>
                 )}
               </div>
             )}
