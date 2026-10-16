@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { Layout } from "./components/Layout";
 import { LandingPage } from "./pages/LandingPage";
+import { AboutUs } from "./pages/AboutUs";
+import { TermsOfService } from "./pages/TermsOfService";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { Login } from "./pages/Login";
 import { Dashboard } from "./pages/Dashboard";
 import { CatatMeter } from "./pages/CatatMeter";
@@ -34,8 +37,11 @@ export const App: React.FC = () => {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Public Promotional Landing Page */}
+          {/* Public Pages */}
           <Route path="/" element={<LandingPage />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/tos" element={<TermsOfService />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
 
           {/* Public Citizen Portals (No login required) */}
           <Route path="/public/:slug/cek-tagihan" element={<PublicCekTagihan />} />

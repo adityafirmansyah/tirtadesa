@@ -394,7 +394,19 @@ export const LandingPage: React.FC = () => {
 
       {/* Footer */}
       <footer className="mt-auto border-t border-slate-200 py-6 px-4 sm:px-6 bg-white text-center text-xs text-slate-500 space-y-2">
-        <div className="flex items-center justify-center space-x-4 font-medium text-slate-600">
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-medium text-slate-600">
+          <Link to="/about" className="hover:text-slate-900">
+            Tentang Kami
+          </Link>
+          <span>•</span>
+          <Link to="/tos" className="hover:text-slate-900">
+            Syarat & Ketentuan
+          </Link>
+          <span>•</span>
+          <Link to="/privacy" className="hover:text-slate-900">
+            Kebijakan Privasi
+          </Link>
+          <span>•</span>
           <Link to="/login" className="hover:text-slate-900">
             Masuk Pengurus
           </Link>
