@@ -1,4 +1,4 @@
-# TirtaDesa (`tirtadesa.id`)
+# TirtaDesa (`tirtadesa.com`)
 
 > **Sistem Pengelolaan Air Bersih Komunitas Desa (KPSPAMS / HIPPAM / SPAMDes)**  
 > *"Air Mengalir Rapi, Kas Transparan"*
