@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /public/
+Disallow: /dashboard
+Disallow: /catat-meter
+Disallow: /tagihan
+Disallow: /pelanggan
+Disallow: /kas
+Disallow: /audit-air
+Disallow: /api/
+
+Sitemap: https://tirtadesa.com/sitemap.xml

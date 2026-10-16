@@ -2,11 +2,95 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/water.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0284c7" />
-    <meta name="description" content="TirtaDesa - Sistem Pengelolaan Air Minum Komunitas Desa" />
-    <title>TirtaDesa - Sistem Pengelolaan Air Bersih Komunitas</title>
+
+    <!-- Primary Meta Tags -->
+    <title>TirtaDesa: Aplikasi Catat Meter &amp; Billing Air Swadaya Desa</title>
+    <meta name="title" content="TirtaDesa: Aplikasi Catat Meter &amp; Billing Air Swadaya Desa" />
+    <meta
+      name="description"
+      content="Sistem informasi dan billing air minum swadaya desa untuk KPSPAMS, HIPPAM, dan BUMDes Air. Catat meter PWA offline, tarif bertingkat, kasir struk thermal 58mm, dan transparansi neraca air publik."
+    />
+    <meta
+      name="keywords"
+      content="TirtaDesa, pamsimas, kpspams, hippam, pam desa, bumdes air, billing air desa, catat meter air, aplikasi air desa, neraca air, non-revenue water"
+    />
+    <meta name="author" content="TirtaDesa Community" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://tirtadesa.com/" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/water.svg" />
+    <link rel="apple-touch-icon" href="/water.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tirtadesa.com/" />
+    <meta property="og:site_name" content="TirtaDesa" />
+    <meta property="og:title" content="TirtaDesa: Aplikasi Catat Meter &amp; Billing Air Swadaya Desa" />
+    <meta
+      property="og:description"
+      content="Platform digitalisasi air bersih desa open-source (MIT). Catat meter tanpa sinyal di pelosok, hitung tagihan otomatis, cetak nota thermal Bluetooth, dan akuntabilitas kas terbuka."
+    />
+    <meta property="og:image" content="https://tirtadesa.com/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="TirtaDesa: Sistem Pengelolaan Air Bersih Komunitas Desa" />
+    <meta property="og:locale" content="id_ID" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://tirtadesa.com/" />
+    <meta name="twitter:title" content="TirtaDesa: Aplikasi Catat Meter &amp; Billing Air Swadaya Desa" />
+    <meta
+      name="twitter:description"
+      content="Platform digitalisasi air bersih desa open-source (MIT) untuk KPSPAMS, HIPPAM, dan BUMDes Air di Indonesia."
+    />
+    <meta name="twitter:image" content="https://tirtadesa.com/og-image.svg" />
+
+    <!-- JSON-LD Structured Data (Schema.org SoftwareApplication & Organization) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "name": "TirtaDesa",
+            "operatingSystem": "Web, Android (PWA), iOS, Linux, Windows",
+            "applicationCategory": "BusinessApplication",
+            "applicationSubCategory": "Utility Management & Billing",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "IDR"
+            },
+            "description": "Sistem informasi dan billing air minum swadaya desa untuk KPSPAMS, HIPPAM, dan BUMDes Air berbasis open-source.",
+            "url": "https://tirtadesa.com",
+            "softwareVersion": "1.0.0",
+            "license": "https://opensource.org/licenses/MIT",
+            "featureList": [
+              "Catat meter PWA offline-first dengan IndexedDB",
+              "Perhitungan tarif air bertingkat (progresif)",
+              "Cetak kuitansi kasir thermal Bluetooth 58mm via ESC/POS",
+              "Audit neraca air dan deteksi kebocoran pipa (NRW)",
+              "Buku kas operasional terintegrasi",
+              "Portal cek tagihan warga mandiri tanpa login",
+              "Dashboard transparansi publik desa"
+            ]
+          },
+          {
+            "@type": "Organization",
+            "name": "TirtaDesa",
+            "url": "https://tirtadesa.com",
+            "logo": "https://tirtadesa.com/water.svg",
+            "sameAs": [
+              "https://github.com/adityafirmansyah/tirtadesa"
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
     <div id="root"></div>
