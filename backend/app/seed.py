@@ -269,8 +269,12 @@ def seed_database(db: Session):
     db.add(kas_out_1)
     db.add(kas_out_2)
 
-    db.commit()
-    print("Seed complete! Demo login: sukamaju / admin / admin123")
+    try:
+        db.commit()
+        print("Seed complete! Demo login: sukamaju / admin / admin123")
+    except Exception as e:
+        db.rollback()
+        print(f"Seed skipped or concurrent worker finished first: {e}")
 
 
 if __name__ == "__main__":
