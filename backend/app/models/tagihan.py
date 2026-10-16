@@ -11,20 +11,22 @@ class Tagihan(Base):
     __tablename__ = "tagihan"
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
+    tenant_id = Column(
+        String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True
+    )
     pelanggan_id = Column(
-        String(36), ForeignKey("pelanggan.id", ondelete="CASCADE"), nullable=False
+        String(36), ForeignKey("pelanggan.id", ondelete="CASCADE"), nullable=False, index=True
     )
     catatan_meter_id = Column(String(36), ForeignKey("catatan_meter.id"), nullable=True)
     nomor_tagihan = Column(String(40), unique=True, nullable=False, index=True)
-    periode = Column(String(7), nullable=False)  # YYYY-MM
+    periode = Column(String(7), nullable=False, index=True)  # YYYY-MM
     rincian_tarif = Column(JSON, nullable=False)  # JSON snapshot calculation
     nominal_volume = Column(Numeric(12, 2), default=0)
     nominal_beban = Column(Numeric(12, 2), default=0)
     nominal_pemeliharaan = Column(Numeric(12, 2), default=0)
     nominal_denda = Column(Numeric(12, 2), default=0)
     total_tagihan = Column(Numeric(12, 2), nullable=False)
-    status = Column(String(20), default="unpaid")  # 'unpaid', 'paid', 'cancelled'
+    status = Column(String(20), default="unpaid", index=True)  # 'unpaid', 'paid', 'cancelled'
     jatuh_tempo = Column(Date, nullable=False)
     paid_at = Column(DateTime, nullable=True)
     metode_pembayaran = Column(String(30), nullable=True)  # 'tunai', 'transfer', 'qris'

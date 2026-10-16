@@ -11,8 +11,10 @@ class MeterInduk(Base):
     __tablename__ = "meter_induk"
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
-    periode = Column(String(7), nullable=False)  # YYYY-MM
+    tenant_id = Column(
+        String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    periode = Column(String(7), nullable=False, index=True)  # YYYY-MM
     nama_sumber = Column(String(100), nullable=False)  # e.g. 'Tandon Mata Air Dusun Barat'
     meter_lalu = Column(Integer, nullable=False)
     meter_kini = Column(Integer, nullable=False)

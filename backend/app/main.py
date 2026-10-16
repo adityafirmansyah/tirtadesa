@@ -23,8 +23,15 @@ from app.seed import seed_database
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Create DB tables
+    # Create DB tables & ensure indexes
     Base.metadata.create_all(bind=engine)
+
+    # Enable SQLite WAL mode and busy_timeout for fast concurrent reads
+    if settings.DATABASE_URL.startswith("sqlite"):
+        with engine.connect() as conn:
+            conn.exec_driver_sql("PRAGMA journal_mode=WAL;")
+            conn.exec_driver_sql("PRAGMA synchronous=NORMAL;")
+            conn.exec_driver_sql("PRAGMA busy_timeout=5000;")
 
     # Auto seed if configured
     if settings.AUTO_SEED:

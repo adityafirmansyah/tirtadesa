@@ -11,17 +11,19 @@ class BukuKas(Base):
     __tablename__ = "buku_kas"
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
-    jenis = Column(String(15), nullable=False)  # 'masuk', 'keluar'
+    tenant_id = Column(
+        String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    jenis = Column(String(15), nullable=False, index=True)  # 'masuk', 'keluar'
     kategori = Column(
-        String(50), nullable=False
+        String(50), nullable=False, index=True
     )  # 'iuran_air', 'listrik_pln', 'kaporit', 'pipa', 'honor', 'lainnya'
     nominal = Column(Numeric(14, 2), nullable=False)
     keterangan = Column(Text, nullable=False)
     foto_nota = Column(String(255), nullable=True)
-    tagihan_id = Column(String(36), ForeignKey("tagihan.id"), nullable=True)
+    tagihan_id = Column(String(36), ForeignKey("tagihan.id"), nullable=True, index=True)
     created_by = Column(String(36), ForeignKey("users.id"), nullable=True)
-    created_at = Column(DateTime, default=lambda: datetime.now(UTC))
+    created_at = Column(DateTime, default=lambda: datetime.now(UTC), index=True)
 
     tenant = relationship("Tenant", back_populates="buku_kas")
     tagihan = relationship("Tagihan", back_populates="buku_kas")

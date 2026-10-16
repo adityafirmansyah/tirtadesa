@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy.orm import Session
+from sqlalchemy import func
+from sqlalchemy.orm import Session, joinedload
 
 from app.core.database import get_db
 from app.core.deps import get_current_tenant, get_current_user, require_roles
@@ -21,7 +22,11 @@ def list_pelanggan(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    q = db.query(Pelanggan).filter(Pelanggan.tenant_id == tenant.id)
+    q = (
+        db.query(Pelanggan)
+        .options(joinedload(Pelanggan.kategori))
+        .filter(Pelanggan.tenant_id == tenant.id)
+    )
 
     if query:
         search_pattern = f"%{query}%"
@@ -37,17 +42,37 @@ def list_pelanggan(
 
     pelanggan_list = q.order_by(Pelanggan.nomor_sr.asc()).all()
 
-    # Attach latest recorded meter for offline cache assistance
+    # Pre-fetch the latest meter reading for ALL customers in ONE single grouped query (Eliminating N+1)
+    pelanggan_ids = [p.id for p in pelanggan_list]
+    latest_meters: dict[str, int] = {}
+
+    if pelanggan_ids:
+        # Subquery to find max period per customer
+        subq = (
+            db.query(
+                CatatanMeter.pelanggan_id,
+                func.max(CatatanMeter.periode).label("max_periode"),
+            )
+            .filter(CatatanMeter.pelanggan_id.in_(pelanggan_ids))
+            .group_by(CatatanMeter.pelanggan_id)
+            .subquery()
+        )
+
+        latest_records = (
+            db.query(CatatanMeter.pelanggan_id, CatatanMeter.meter_kini)
+            .join(
+                subq,
+                (CatatanMeter.pelanggan_id == subq.c.pelanggan_id)
+                & (CatatanMeter.periode == subq.c.max_periode),
+            )
+            .all()
+        )
+        latest_meters = {rec.pelanggan_id: rec.meter_kini for rec in latest_records}
+
     results = []
     for p in pelanggan_list:
-        latest_meter = (
-            db.query(CatatanMeter)
-            .filter(CatatanMeter.pelanggan_id == p.id)
-            .order_by(CatatanMeter.periode.desc())
-            .first()
-        )
         p_dict = PelangganOut.model_validate(p)
-        p_dict.meter_terakhir = latest_meter.meter_kini if latest_meter else p.meter_awal_pemasangan
+        p_dict.meter_terakhir = latest_meters.get(p.id, p.meter_awal_pemasangan)
         results.append(p_dict)
 
     return results

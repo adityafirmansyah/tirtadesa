@@ -11,11 +11,13 @@ class CatatanMeter(Base):
     __tablename__ = "catatan_meter"
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
-    pelanggan_id = Column(
-        String(36), ForeignKey("pelanggan.id", ondelete="CASCADE"), nullable=False
+    tenant_id = Column(
+        String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True
     )
-    periode = Column(String(7), nullable=False)  # YYYY-MM
+    pelanggan_id = Column(
+        String(36), ForeignKey("pelanggan.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    periode = Column(String(7), nullable=False, index=True)  # YYYY-MM
     meter_lalu = Column(Integer, nullable=False)
     meter_kini = Column(Integer, nullable=False)
     volume_m3 = Column(Integer, nullable=False)  # Calculated as meter_kini - meter_lalu

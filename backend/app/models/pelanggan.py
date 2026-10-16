@@ -11,14 +11,16 @@ class Pelanggan(Base):
     __tablename__ = "pelanggan"
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
-    nomor_sr = Column(String(30), nullable=False)  # e.g. 'SR-0001'
-    nama_pelanggan = Column(String(120), nullable=False)
-    no_hp = Column(String(25), nullable=True)
+    tenant_id = Column(
+        String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    nomor_sr = Column(String(30), nullable=False, index=True)  # e.g. 'SR-0001'
+    nama_pelanggan = Column(String(120), nullable=False, index=True)
+    no_hp = Column(String(25), nullable=True, index=True)
     alamat = Column(Text, nullable=False)
-    dusun_rt_rw = Column(String(50), nullable=True)
-    kategori_id = Column(String(36), ForeignKey("kategori_tarif.id"), nullable=False)
-    status = Column(String(20), default="aktif")  # 'aktif', 'disegel', 'nonaktif'
+    dusun_rt_rw = Column(String(50), nullable=True, index=True)
+    kategori_id = Column(String(36), ForeignKey("kategori_tarif.id"), nullable=False, index=True)
+    status = Column(String(20), default="aktif", index=True)  # 'aktif', 'disegel', 'nonaktif'
     meter_awal_pemasangan = Column(Integer, default=0)
     created_at = Column(DateTime, default=lambda: datetime.now(UTC))
 

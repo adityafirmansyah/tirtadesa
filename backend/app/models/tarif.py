@@ -10,8 +10,10 @@ class KategoriTarif(Base):
     __tablename__ = "kategori_tarif"
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
-    kode = Column(String(20), nullable=False)  # e.g. 'R1', 'R2', 'NIAGA', 'SOSIAL'
+    tenant_id = Column(
+        String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    kode = Column(String(20), nullable=False, index=True)  # e.g. 'R1', 'R2', 'NIAGA', 'SOSIAL'
     nama = Column(String(100), nullable=False)
     biaya_beban = Column(Numeric(12, 2), default=0)
     biaya_pemeliharaan = Column(Numeric(12, 2), default=0)
