@@ -71,49 +71,49 @@ export const PublicTransparansi: React.FC = () => {
         </Link>
 
         {/* Hero Header */}
-        <div className="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-sm space-y-2">
-          <div className="inline-flex items-center space-x-1.5 bg-sky-500/20 text-sky-300 px-3 py-1 rounded-full text-xs font-semibold border border-sky-400/30">
-            <Droplets className="w-3.5 h-3.5" />
+        <div className="bg-white text-slate-900 p-6 sm:p-7 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <div className="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-wider text-sky-700">
+            <Droplets className="w-4 h-4 text-sky-600" />
             <span>Transparansi Publik Neraca Air & Kas</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{komunitas.nama_organisasi}</h1>
-          <p className="text-xs sm:text-sm text-slate-400">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">{komunitas.nama_organisasi}</h1>
+          <p className="text-xs sm:text-sm text-slate-500">
             Desa {komunitas.desa}, Kec. {komunitas.kecamatan || "-"}, {komunitas.kabupaten || "-"}
           </p>
         </div>
 
         {/* 2x2 Grid of Key Metrics */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Warga Terlayani</span>
-            <span className="text-xl sm:text-2xl font-bold text-slate-900 mt-1 block">
+          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">Warga Terlayani</span>
+            <span className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1 block">
               {statistik.total_sambungan_rumah} SR
             </span>
-            <span className="text-[11px] text-slate-500">Sambungan Rumah</span>
+            <span className="text-[11px] text-slate-400">Sambungan Rumah</span>
           </div>
 
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Saldo Kas Desa</span>
-            <span className="text-lg sm:text-xl font-bold text-emerald-600 mt-1 block truncate">
+          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">Saldo Kas Desa</span>
+            <span className="text-lg sm:text-xl font-bold font-mono text-emerald-700 mt-1 block truncate">
               Rp {Math.round(statistik.saldo_kas_operasional).toLocaleString("id-ID")}
             </span>
-            <span className="text-[11px] text-slate-500">Kas Operasional</span>
+            <span className="text-[11px] text-slate-400">Kas Operasional</span>
           </div>
 
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
             <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Air Tersalur</span>
-            <span className="text-lg sm:text-xl font-bold text-sky-600 mt-1 block">
+            <span className="text-lg sm:text-xl font-bold font-mono text-sky-700 mt-1 block">
               {statistik.total_konsumsi_warga_m3.toLocaleString("id-ID")} m³
             </span>
-            <span className="text-[11px] text-slate-500">Konsumsi Warga</span>
+            <span className="text-[11px] text-slate-400">Konsumsi Warga</span>
           </div>
 
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
             <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Kehilangan Air</span>
-            <span className="text-lg sm:text-xl font-bold text-slate-900 mt-1 block">
+            <span className="text-lg sm:text-xl font-bold font-mono text-slate-900 mt-1 block">
               {statistik.tingkat_kehilangan_air_persen}%
             </span>
-            <span className="text-[11px] text-slate-500">Tingkat Susut (NRW)</span>
+            <span className="text-[11px] text-slate-400">Tingkat Susut (NRW)</span>
           </div>
         </div>
 

@@ -61,21 +61,21 @@ export const PublicCekTagihan: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col justify-between p-4 sm:p-6">
-      <div className="max-w-md w-full mx-auto space-y-5">
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-between p-4 sm:p-6">
+      <div className="max-w-md w-full mx-auto space-y-4">
         {/* Header */}
         <div className="text-center pt-4">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-sky-600 text-white shadow-md mb-2">
-            <Droplets className="w-7 h-7" />
+          <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-sky-600 text-white shadow-sm mb-2">
+            <Droplets className="w-6 h-6" />
           </div>
-          <h1 className="text-xl font-black text-slate-900 tracking-tight">Cek Tagihan Air Warga</h1>
+          <h1 className="text-xl font-bold text-slate-900 tracking-tight">Cek Tagihan Air Warga</h1>
           <p className="text-xs text-slate-500">
-            KPSPAMS / PAM Desa <span className="capitalize font-semibold text-sky-700">{slug}</span>
+            KPSPAMS / PAM Desa <span className="capitalize font-semibold text-slate-700">{slug}</span>
           </p>
         </div>
 
         {/* Search Card */}
-        <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+        <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
           <form onSubmit={handleSearch} className="space-y-3">
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
@@ -88,12 +88,12 @@ export const PublicCekTagihan: React.FC = () => {
                   placeholder="Contoh: SR-0001 atau 0812..."
                   value={nomor}
                   onChange={(e) => setNomor(e.target.value)}
-                  className="w-full text-sm py-2.5 pl-3 pr-10 border border-slate-300 rounded-xl focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                  className="w-full text-xs py-2.5 pl-3 pr-10 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none"
                 />
                 <button
                   type="submit"
                   disabled={loading}
-                  className="absolute right-1.5 top-1.5 bg-sky-600 hover:bg-sky-500 text-white p-2 rounded-lg"
+                  className="absolute right-1.5 top-1.5 bg-sky-600 hover:bg-sky-500 text-white p-1.5 rounded-lg"
                 >
                   <Search className="w-4 h-4" />
                 </button>
@@ -102,7 +102,7 @@ export const PublicCekTagihan: React.FC = () => {
           </form>
 
           {error && (
-            <div className="mt-3 bg-red-50 border border-red-200 text-red-700 text-xs p-3 rounded-xl flex items-start space-x-2">
+            <div className="mt-3 bg-red-50 border border-red-200 text-red-700 text-xs p-3 rounded-lg flex items-start space-x-2">
               <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-500 mt-0.5" />
               <span>{error}</span>
             </div>
@@ -113,8 +113,8 @@ export const PublicCekTagihan: React.FC = () => {
         {data && (
           <div className="space-y-4">
             {/* Customer Profile Banner */}
-            <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-              <span className="text-[10px] font-bold bg-sky-100 text-sky-800 px-2 py-0.5 rounded-full uppercase">
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+              <span className="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded uppercase">
                 {data.pelanggan.nomor_sr}
               </span>
               <h2 className="text-base font-bold text-slate-900 mt-1">{data.pelanggan.nama_pelanggan}</h2>
@@ -122,7 +122,7 @@ export const PublicCekTagihan: React.FC = () => {
 
               <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
                 <span className="text-xs text-slate-600 font-medium">Total Tunggakan:</span>
-                <span className="text-lg font-black text-amber-600">
+                <span className="text-lg font-bold font-mono text-amber-700">
                   Rp {Math.round(data.total_tunggakan).toLocaleString("id-ID")}
                 </span>
               </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Droplets, AlertTriangle, CheckCircle, Plus, X } from "lucide-react";
+import { Droplets, AlertTriangle, Plus, X } from "lucide-react";
 import { api } from "../api/client";
 
 interface WaterBalanceData {
@@ -102,49 +102,56 @@ export const AuditAir: React.FC = () => {
 
       {/* Water Balance Diagnosis */}
       {balance && (
-        <div className="bg-gradient-to-br from-indigo-900 to-slate-900 text-white p-6 rounded-2xl shadow-sm border border-indigo-800">
-          <span className="text-xs font-semibold uppercase tracking-wider text-indigo-300">
-            Diagnosis Efisiensi Distribusi Air • Periode {balance.periode}
-          </span>
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mt-4">
+        <div className="bg-white text-slate-900 p-6 rounded-xl shadow-sm border border-slate-200">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              Diagnosis Efisiensi Distribusi Air • Periode {balance.periode}
+            </span>
+            <span
+              className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
+                balance.persentase_kehilangan > 25
+                  ? "bg-amber-100 text-amber-800"
+                  : "bg-emerald-100 text-emerald-800"
+              }`}
+            >
+              {balance.status_efisiensi}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
             <div>
-              <span className="text-xs text-slate-400 block">Air Dipompa (Produksi)</span>
-              <span className="text-2xl font-bold font-mono text-white mt-1 block">
+              <span className="text-[11px] font-medium text-slate-500 block">Air Dipompa (Produksi)</span>
+              <span className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1 block">
                 {balance.total_produksi_m3.toLocaleString("id-ID")} m³
               </span>
             </div>
             <div>
-              <span className="text-xs text-slate-400 block">Air Dikonsumsi Warga</span>
-              <span className="text-2xl font-bold font-mono text-sky-400 mt-1 block">
+              <span className="text-[11px] font-medium text-slate-500 block">Air Dikonsumsi Warga</span>
+              <span className="text-xl sm:text-2xl font-bold font-mono text-sky-700 mt-1 block">
                 {balance.total_konsumsi_pelanggan_m3.toLocaleString("id-ID")} m³
               </span>
             </div>
             <div>
-              <span className="text-xs text-slate-400 block">Air Susut / Hilang</span>
-              <span className="text-2xl font-bold font-mono text-amber-400 mt-1 block">
+              <span className="text-[11px] font-medium text-slate-500 block">Air Susut / Hilang</span>
+              <span className="text-xl sm:text-2xl font-bold font-mono text-amber-700 mt-1 block">
                 {balance.kehilangan_air_m3.toLocaleString("id-ID")} m³
               </span>
             </div>
             <div>
-              <span className="text-xs text-slate-400 block">Tingkat Kehilangan (Loss)</span>
-              <span className="text-2xl font-black font-mono text-white mt-1 block">
+              <span className="text-[11px] font-medium text-slate-500 block">Tingkat Kehilangan (Loss)</span>
+              <span className="text-xl sm:text-2xl font-black font-mono text-slate-900 mt-1 block">
                 {balance.persentase_kehilangan}%
               </span>
             </div>
           </div>
 
-          <div className="mt-4 pt-4 border-t border-indigo-800/60 flex items-center space-x-2">
-            {balance.persentase_kehilangan > 25 ? (
-              <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0" />
-            ) : (
-              <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
-            )}
-            <span className="text-xs font-medium text-slate-200">
-              Status Jaringan: <strong className="text-white">{balance.status_efisiensi}</strong>
-              {balance.persentase_kehilangan > 25 &&
-                " — Disarankan periksa pipa transmisi dari tandon atau sambungan warga yang belum termeter."}
-            </span>
-          </div>
+          {balance.persentase_kehilangan > 25 && (
+            <div className="mt-4 pt-3 border-t border-slate-100 flex items-start space-x-2 text-xs text-amber-800 bg-amber-50 p-2.5 rounded-lg border border-amber-200">
+              <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+              <span>
+                Peringatan: Tingkat kehilangan air melebihi batas wajar (25%). Disarankan periksa pipa transmisi dari tandon atau sambungan warga yang belum termeter.
+              </span>
+            </div>
+          )}
         </div>
       )}
 

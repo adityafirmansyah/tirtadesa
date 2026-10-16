@@ -9,6 +9,7 @@ import {
   Gauge,
   Receipt,
   FileSpreadsheet,
+  CheckCircle2,
 } from "lucide-react";
 import { api } from "../api/client";
 import { useAuth } from "../context/AuthContext";
@@ -56,173 +57,188 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-sky-800 to-slate-900 rounded-2xl p-6 text-white shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Grounded Operational Header (No generic AI gradient) */}
+      <div className="bg-white rounded-xl p-5 sm:p-6 border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-semibold bg-sky-500/20 text-sky-300 px-2.5 py-0.5 rounded-full border border-sky-400/30">
-            Sistem Informasi Air Bersih Desa
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold mt-1 tracking-tight">
+          <div className="flex items-center space-x-2 text-xs font-semibold text-sky-700 uppercase tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+            <span>Unit Layanan Aktif • Desa Sukamaju</span>
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1 tracking-tight">
             {user?.tenant_nama || "KPSPAMS TirtaDesa"}
           </h1>
-          <p className="text-sm text-sky-100/80 mt-1">
-            Selamat bekerja, {user?.nama_lengkap}. Kelola tagihan, pantau kebocoran pipa, dan transparansi kas desa.
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Petugas bertugas: <strong className="text-slate-700">{user?.nama_lengkap}</strong> ({user?.role?.replace("_", " ")}).
           </p>
         </div>
-        <div className="flex gap-2">
+
+        <div className="flex items-center gap-2">
           <Link
             to="/catat-meter"
-            className="inline-flex items-center space-x-2 bg-sky-500 hover:bg-sky-400 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow transition-all"
+            className="inline-flex items-center space-x-1.5 bg-sky-600 hover:bg-sky-500 text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors shadow-sm"
           >
             <Gauge className="w-4 h-4" />
-            <span>Catat Meter</span>
+            <span>Mulai Catat Meter</span>
+          </Link>
+          <Link
+            to="/tagihan"
+            className="inline-flex items-center space-x-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors border border-slate-200"
+          >
+            <Receipt className="w-4 h-4" />
+            <span>Buka Kasir</span>
           </Link>
         </div>
       </div>
 
-      {/* 2x2 Grid on Mobile, 4 columns on Desktop (Compact Cards per SOP) */}
+      {/* 2x2 Metric Cards (Clean, readable, no floating blur shadows) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Card 1: Sambungan Rumah */}
-        <div className="bg-white p-3 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">Sambungan (SR)</span>
-            <div className="p-2 rounded-lg bg-sky-50 text-sky-600">
+            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Sambungan Rumah</span>
+            <div className="p-1.5 rounded-lg bg-slate-100 text-slate-700">
               <Users className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-2 flex items-baseline justify-between">
-            <span className="text-xl sm:text-2xl font-bold text-slate-900">
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-slate-900 font-mono">
               {loading ? "..." : stats.totalPelanggan}
-            </span>
-            <span className="text-xs text-emerald-600 font-medium">Aktif</span>
+            </div>
+            <div className="flex items-center space-x-1 mt-1 text-[11px] text-emerald-600 font-medium">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Semua terdaftar aktif</span>
+            </div>
           </div>
         </div>
 
         {/* Card 2: Saldo Kas */}
-        <div className="bg-white p-3 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">Saldo Kas</span>
-            <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600">
+            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Saldo Kas Bersih</span>
+            <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700">
               <Wallet className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-2">
-            <span className="text-lg sm:text-xl font-bold text-slate-900 truncate block">
+          <div className="mt-3">
+            <div className="text-xl sm:text-2xl font-bold text-slate-900 font-mono truncate">
               {loading ? "..." : `Rp ${Math.round(stats.saldoKas).toLocaleString("id-ID")}`}
-            </span>
-            <span className="text-xs text-slate-400">Kas Operasional</span>
+            </div>
+            <div className="text-[11px] text-slate-500 mt-1">Kas operasional unit air</div>
           </div>
         </div>
 
         {/* Card 3: Tunggakan */}
-        <div className="bg-white p-3 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">Tunggakan</span>
-            <div className="p-2 rounded-lg bg-amber-50 text-amber-600">
+            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Tunggakan Iuran</span>
+            <div className="p-1.5 rounded-lg bg-amber-50 text-amber-700">
               <AlertCircle className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-2">
-            <span className="text-lg sm:text-xl font-bold text-amber-600 truncate block">
+          <div className="mt-3">
+            <div className="text-xl sm:text-2xl font-bold text-amber-700 font-mono truncate">
               {loading ? "..." : `Rp ${Math.round(stats.totalTunggakan).toLocaleString("id-ID")}`}
-            </span>
-            <span className="text-xs text-slate-400">Belum Terbayar</span>
+            </div>
+            <div className="text-[11px] text-slate-500 mt-1">Belum dilunasi warga</div>
           </div>
         </div>
 
-        {/* Card 4: Kehilangan Air */}
-        <div className="bg-white p-3 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
+        {/* Card 4: Susut Air / NRW */}
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">Susut Air (NRW)</span>
-            <div className="p-2 rounded-lg bg-indigo-50 text-indigo-600">
+            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Susut Air (NRW)</span>
+            <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-700">
               <Droplets className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-2 flex items-baseline justify-between">
-            <span className="text-xl sm:text-2xl font-bold text-slate-900">
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-slate-900 font-mono">
               {loading ? "..." : `${stats.kehilanganAirPct}%`}
-            </span>
-            <span className="text-xs text-emerald-600 font-medium">Bulan Ini</span>
+            </div>
+            <div className="text-[11px] text-slate-500 mt-1">Selisih tandon vs meteran</div>
           </div>
         </div>
       </div>
 
-      {/* Quick Action Bar */}
-      <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
-        <h3 className="text-sm font-semibold text-slate-900">Menu Cepat Pengelola</h3>
+      {/* Structured Operational Modules */}
+      <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-3">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+          <h2 className="text-sm font-bold text-slate-900">Alur Kerja Pengelolaan</h2>
+          <span className="text-xs text-slate-500">Pilih modul tugas</span>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Link
             to="/catat-meter"
-            className="flex items-center justify-between p-3.5 rounded-lg border border-slate-200 hover:border-sky-300 hover:bg-sky-50/50 transition-all group"
+            className="p-3.5 rounded-lg border border-slate-200 hover:border-sky-300 hover:bg-sky-50/40 transition-all flex items-start justify-between group"
           >
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-sky-100 text-sky-700 rounded-lg">
-                <Gauge className="w-5 h-5" />
+            <div className="space-y-1">
+              <div className="flex items-center space-x-2">
+                <Gauge className="w-4 h-4 text-sky-600" />
+                <span className="text-xs font-bold text-slate-900">1. Catat Meter Warga</span>
               </div>
-              <div>
-                <div className="text-sm font-medium text-slate-800">Catat Meter PWA</div>
-                <div className="text-xs text-slate-500">Mode offline di lapangan</div>
-              </div>
+              <p className="text-[11px] text-slate-500 leading-relaxed">
+                Pencatatan angka meter offline di lapangan per dusun / RT.
+              </p>
             </div>
-            <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600" />
+            <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 group-hover:translate-x-0.5 transition-transform flex-shrink-0 mt-0.5" />
           </Link>
 
           <Link
             to="/tagihan"
-            className="flex items-center justify-between p-3.5 rounded-lg border border-slate-200 hover:border-sky-300 hover:bg-sky-50/50 transition-all group"
+            className="p-3.5 rounded-lg border border-slate-200 hover:border-sky-300 hover:bg-sky-50/40 transition-all flex items-start justify-between group"
           >
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-emerald-100 text-emerald-700 rounded-lg">
-                <Receipt className="w-5 h-5" />
+            <div className="space-y-1">
+              <div className="flex items-center space-x-2">
+                <Receipt className="w-4 h-4 text-emerald-600" />
+                <span className="text-xs font-bold text-slate-900">2. Tagihan & Kasir</span>
               </div>
-              <div>
-                <div className="text-sm font-medium text-slate-800">Kasir & Cetak Struk</div>
-                <div className="text-xs text-slate-500">Cetak printer Bluetooth 58mm</div>
-              </div>
+              <p className="text-[11px] text-slate-500 leading-relaxed">
+                Penerbitan rekening air otomatis dan cetak nota kasir thermal 58mm.
+              </p>
             </div>
-            <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600" />
+            <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-transform flex-shrink-0 mt-0.5" />
           </Link>
 
           <Link
             to="/audit-air"
-            className="flex items-center justify-between p-3.5 rounded-lg border border-slate-200 hover:border-sky-300 hover:bg-sky-50/50 transition-all group"
+            className="p-3.5 rounded-lg border border-slate-200 hover:border-sky-300 hover:bg-sky-50/40 transition-all flex items-start justify-between group"
           >
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg">
-                <FileSpreadsheet className="w-5 h-5" />
+            <div className="space-y-1">
+              <div className="flex items-center space-x-2">
+                <FileSpreadsheet className="w-4 h-4 text-indigo-600" />
+                <span className="text-xs font-bold text-slate-900">3. Audit & Neraca Air</span>
               </div>
-              <div>
-                <div className="text-sm font-medium text-slate-800">Neraca & Kebocoran</div>
-                <div className="text-xs text-slate-500">Meter induk vs meter warga</div>
-              </div>
+              <p className="text-[11px] text-slate-500 leading-relaxed">
+                Pemantauan air dipompa vs tertagih untuk melacak pipa bocor.
+              </p>
             </div>
-            <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600" />
+            <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-transform flex-shrink-0 mt-0.5" />
           </Link>
         </div>
       </div>
 
-      {/* Citizen Transparency Link Box */}
-      <div className="bg-sky-50 border border-sky-200 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      {/* Citizen Access Transparency Callout */}
+      <div className="bg-slate-100 rounded-xl p-4 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
         <div>
-          <h4 className="text-sm font-bold text-sky-950">Portal Transparansi Warga Siap Digunakan</h4>
-          <p className="text-xs text-sky-800 mt-0.5">
-            Warga desa dapat memeriksa tagihan mandiri dan melihat neraca air publik tanpa harus memiliki akun login.
-          </p>
+          <span className="font-bold text-slate-800">Akses Publik Transparansi Warga:</span>
+          <span className="text-slate-600 ml-1">
+            Warga desa dapat melihat tagihan mandiri dan laporan transparansi kas tanpa login.
+          </span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0">
           <Link
             to={`/public/${user?.tenant_slug || "sukamaju"}/cek-tagihan`}
             target="_blank"
-            className="text-xs bg-white text-sky-700 font-semibold px-3 py-1.5 rounded-lg border border-sky-300 shadow-sm hover:bg-sky-100 transition-colors"
+            className="bg-white hover:bg-slate-50 text-slate-700 font-semibold px-3 py-1.5 rounded-lg border border-slate-300 transition-colors"
           >
-            Buka Cek Tagihan Warga
+            Cek Tagihan Mandiri
           </Link>
           <Link
             to={`/public/${user?.tenant_slug || "sukamaju"}/transparansi`}
             target="_blank"
-            className="text-xs bg-sky-600 text-white font-semibold px-3 py-1.5 rounded-lg shadow-sm hover:bg-sky-700 transition-colors"
+            className="bg-sky-600 hover:bg-sky-500 text-white font-semibold px-3 py-1.5 rounded-lg transition-colors"
           >
-            Lihat Neraca Publik
+            Laporan Neraca Publik
           </Link>
         </div>
       </div>
