@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { Layout } from "./components/Layout";
+import { LandingPage } from "./pages/LandingPage";
 import { Login } from "./pages/Login";
 import { Dashboard } from "./pages/Dashboard";
 import { CatatMeter } from "./pages/CatatMeter";
@@ -23,7 +24,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 const GuestRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
   if (isAuthenticated) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
   return <>{children}</>;
 };
@@ -33,6 +34,9 @@ export const App: React.FC = () => {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+          {/* Public Promotional Landing Page */}
+          <Route path="/" element={<LandingPage />} />
+
           {/* Public Citizen Portals (No login required) */}
           <Route path="/public/:slug/cek-tagihan" element={<PublicCekTagihan />} />
           <Route path="/public/:slug/transparansi" element={<PublicTransparansi />} />
@@ -55,7 +59,7 @@ export const App: React.FC = () => {
               </ProtectedRoute>
             }
           >
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/catat-meter" element={<CatatMeter />} />
             <Route path="/tagihan" element={<Tagihan />} />
             <Route path="/pelanggan" element={<Pelanggan />} />

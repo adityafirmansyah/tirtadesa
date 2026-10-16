@@ -12,6 +12,7 @@ export const Layout: React.FC = () => {
   const getPageTitle = (pathname: string) => {
     switch (pathname) {
       case "/":
+      case "/dashboard":
         return "Dashboard Utama";
       case "/catat-meter":
         return "Pencatatan Meter Air";
@@ -77,7 +78,7 @@ export const Layout: React.FC = () => {
 
         {/* Footer */}
         <footer className="border-t border-slate-200 py-3.5 px-6 text-center text-xs text-slate-500 bg-white">
-          <span>TirtaDesa — Sistem Pengelolaan Air Bersih Swadaya Komunitas (Open Source MIT)</span>
+          <span>TirtaDesa: Sistem Pengelolaan Air Bersih Swadaya Komunitas (Open Source MIT)</span>
         </footer>
       </div>
     </div>

@@ -144,7 +144,7 @@ export const PublicTransparansi: React.FC = () => {
       </div>
 
       <footer className="text-center text-[11px] text-slate-400 py-6">
-        TirtaDesa — Platform Pengelolaan Air Terbuka untuk Komunitas Indonesia (Open Source MIT)
+        TirtaDesa: Platform Pengelolaan Air Terbuka untuk Komunitas Indonesia (Open Source MIT)
       </footer>
     </div>
   );

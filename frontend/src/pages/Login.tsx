@@ -28,7 +28,7 @@ export const Login: React.FC = () => {
 
       const { access_token, ...userData } = res.data;
       login(access_token, userData as UserData);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err: unknown) {
       const errorMsg =
         (err as { response?: { data?: { detail?: string } } }).response?.data?.detail ||

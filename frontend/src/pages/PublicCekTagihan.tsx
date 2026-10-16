@@ -205,7 +205,7 @@ export const PublicCekTagihan: React.FC = () => {
       </div>
 
       <footer className="text-center text-[11px] text-slate-400 py-4">
-        TirtaDesa — Platform Pengelolaan Air Terbuka untuk Komunitas Indonesia
+        TirtaDesa: Platform Pengelolaan Air Terbuka untuk Komunitas Indonesia
       </footer>
     </div>
   );

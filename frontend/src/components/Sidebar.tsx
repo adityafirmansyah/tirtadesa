@@ -42,7 +42,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, setMobileOpen }) =
     {
       title: "Ringkasan",
       items: [
-        { to: "/", label: "Dashboard", icon: Activity },
+        { to: "/dashboard", label: "Dashboard", icon: Activity },
       ],
     },
     {
