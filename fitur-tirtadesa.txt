@@ -36,7 +36,8 @@ Bahasa Awam / Non-Teknis
   kasir 58mm) langsung dari HP atau laptop sebagai bukti pembayaran sah.
 
 - Pilihan Cara Bayar:
-  Mendukung pencatatan bayar tunai, transfer bank, maupun scan QRIS.
+  Mendukung pencatatan bayar tunai, transfer bank (BRI, BNI, Mandiri, dll),
+  maupun scan barcode QRIS (BCA, GoPay, OVO, Dana, ShopeePay) langsung di portal warga.
 
 
 ================================================================================
