@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Droplets, Search, CheckCircle, Clock, AlertCircle } from "lucide-react";
+import QRCode from "qrcode";
+import { Search, Droplets, CheckCircle, Clock, AlertCircle, QrCode } from "lucide-react";
 import { api } from "../api/client";
 
 interface TagihanDetail {
@@ -37,8 +38,28 @@ export const PublicCekTagihan: React.FC = () => {
     info_pembayaran: {
       nomor_rekening: string;
       kontak_pengurus: string;
+      qris_payload?: string;
     };
   } | null>(null);
+
+  const [qrisDataUrl, setQrisDataUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (data?.info_pembayaran?.qris_payload) {
+      QRCode.toDataURL(data.info_pembayaran.qris_payload, {
+        width: 260,
+        margin: 2,
+        color: {
+          dark: "#0f172a",
+          light: "#ffffff",
+        },
+      })
+        .then((url) => setQrisDataUrl(url))
+        .catch((err) => console.error("QR Code generate error:", err));
+    } else {
+      setQrisDataUrl(null);
+    }
+  }, [data]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -177,16 +198,48 @@ export const PublicCekTagihan: React.FC = () => {
               })}
             </div>
 
-            {/* Payment Info Box */}
-            {data.info_pembayaran.nomor_rekening && (
-              <div className="bg-sky-50 border border-sky-200 p-4 rounded-xl text-xs text-sky-900 space-y-1">
-                <span className="font-bold uppercase tracking-wider block text-sky-950">Cara Pembayaran</span>
-                <p>Silakan bayar tunai ke petugas loket atau transfer ke:</p>
-                <div className="font-mono font-bold bg-white p-2 rounded border border-sky-300 text-sky-900 select-all">
-                  {data.info_pembayaran.nomor_rekening}
+            {/* Payment Info Box (Bank & QRIS) */}
+            {(data.info_pembayaran.nomor_rekening || qrisDataUrl) && (
+              <div className="bg-sky-50 border border-sky-200 p-4 rounded-xl text-xs text-sky-900 space-y-3">
+                <span className="font-bold uppercase tracking-wider block text-sky-950">
+                  Cara Pembayaran Tagihan
+                </span>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-center">
+                  {/* Bank Transfer Box */}
+                  {data.info_pembayaran.nomor_rekening && (
+                    <div className="space-y-1">
+                      <p className="font-semibold text-slate-700">1. Transfer Bank / Bayar Tunai:</p>
+                      <div className="font-mono font-bold bg-white p-2.5 rounded-lg border border-sky-300 text-sky-900 select-all whitespace-pre-line text-[11px]">
+                        {data.info_pembayaran.nomor_rekening}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* QRIS Box */}
+                  {qrisDataUrl && (
+                    <div className="bg-white p-3 rounded-lg border border-sky-300 flex flex-col items-center text-center">
+                      <div className="flex items-center space-x-1 text-slate-800 font-bold mb-1">
+                        <QrCode className="w-3.5 h-3.5 text-sky-600" />
+                        <span>2. Scan QRIS Pembayaran:</span>
+                      </div>
+                      <img
+                        src={qrisDataUrl}
+                        alt="QRIS Desa"
+                        className="w-36 h-36 object-contain rounded border border-slate-200"
+                      />
+                      <p className="text-[10px] text-slate-500 mt-1">
+                        Mendukung BCA, GoPay, OVO, Dana, ShopeePay, dan mobile banking lainnya.
+                      </p>
+                    </div>
+                  )}
                 </div>
+
                 {data.info_pembayaran.kontak_pengurus && (
-                  <p className="text-[11px] text-sky-700">Konfirmasi WA: {data.info_pembayaran.kontak_pengurus}</p>
+                  <p className="text-[11px] text-sky-800 pt-1 border-t border-sky-200">
+                    Konfirmasi Bukti Transfer via WhatsApp:{" "}
+                    <span className="font-bold text-sky-950">{data.info_pembayaran.kontak_pengurus}</span>
+                  </p>
                 )}
               </div>
             )}

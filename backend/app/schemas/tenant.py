@@ -11,6 +11,7 @@ class TenantBase(BaseModel):
     kabupaten: str | None = None
     nomor_rekening: str | None = None
     kontak_pengurus: str | None = None
+    qris_payload: str | None = None
 
 
 class TenantCreate(TenantBase):
@@ -24,6 +25,7 @@ class TenantUpdate(BaseModel):
     kabupaten: str | None = None
     nomor_rekening: str | None = None
     kontak_pengurus: str | None = None
+    qris_payload: str | None = None
 
 
 class TenantOut(TenantBase):

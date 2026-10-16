@@ -98,6 +98,7 @@ def public_cek_tagihan(
         "info_pembayaran": {
             "nomor_rekening": tenant.nomor_rekening,
             "kontak_pengurus": tenant.kontak_pengurus,
+            "qris_payload": tenant.qris_payload,
         },
     }
 

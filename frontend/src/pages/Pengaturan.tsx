@@ -19,6 +19,7 @@ interface TenantProfile {
   kabupaten: string;
   nomor_rekening: string;
   kontak_pengurus: string;
+  qris_payload?: string;
 }
 
 export const Pengaturan: React.FC = () => {
@@ -33,6 +34,7 @@ export const Pengaturan: React.FC = () => {
     kabupaten: "",
     nomor_rekening: "",
     kontak_pengurus: "",
+    qris_payload: "",
   });
 
   const [usersList, setUsersList] = useState<UserItem[]>([]);
@@ -58,6 +60,7 @@ export const Pengaturan: React.FC = () => {
         kabupaten: res.data.kabupaten || "",
         nomor_rekening: res.data.nomor_rekening || "",
         kontak_pengurus: res.data.kontak_pengurus || "",
+        qris_payload: res.data.qris_payload || "",
       });
     } catch (err) {
       console.error(err);
@@ -248,6 +251,22 @@ export const Pengaturan: React.FC = () => {
                 onChange={(e) => setProfile({ ...profile, nomor_rekening: e.target.value })}
                 className="w-full text-xs py-2 px-3 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-sky-500"
               />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
+                Data QRIS Pembayaran Desa (Teks EMVCo / String QRIS)
+              </label>
+              <textarea
+                rows={2}
+                placeholder="00020101021126600016ID.CO.QRIS.WWW... (Bisa diisi string QRIS resmi atau link gambar barcode QRIS)"
+                value={profile.qris_payload}
+                onChange={(e) => setProfile({ ...profile, qris_payload: e.target.value })}
+                className="w-full text-xs py-2 px-3 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-sky-500"
+              />
+              <p className="text-[11px] text-slate-500 mt-1">
+                Jika diisi, barcode QRIS akan otomatis di-generate dan tampil di portal cek tagihan warga.
+              </p>
             </div>
 
             <div>

@@ -18,6 +18,7 @@ class Tenant(Base):
     kabupaten = Column(String(100), nullable=True)
     nomor_rekening = Column(Text, nullable=True)
     kontak_pengurus = Column(String(50), nullable=True)
+    qris_payload = Column(Text, nullable=True)  # Raw EMVCo QRIS string or QR code payload
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=lambda: datetime.now(UTC))
 
