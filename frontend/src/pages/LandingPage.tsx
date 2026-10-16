@@ -12,6 +12,7 @@ import {
   ArrowRight,
   ExternalLink,
   Github,
+  Sparkles,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
@@ -19,6 +20,11 @@ export const LandingPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
 
   const operationalFeatures = [
+    {
+      icon: Sparkles,
+      title: "Smart AI Meter Scanner (ONNX Web)",
+      desc: "Petugas cukup mengarahkan kamera ke jendela angka meteran air. Model Edge AI memproses gambar langsung di perangkat secara instan tanpa mengirim data ke server atau menggunakan kuota.",
+    },
     {
       icon: WifiOff,
       title: "Catat Meter Tanpa Sinyal (PWA)",
@@ -171,6 +177,9 @@ export const LandingPage: React.FC = () => {
         </div>
 
         <div className="pt-4 flex items-center justify-center space-x-4 text-xs text-slate-500 font-medium">
+          <span className="flex items-center">
+            <CheckCircle className="w-3.5 h-3.5 text-emerald-600 mr-1" /> Smart AI Scanner
+          </span>
           <span className="flex items-center">
             <CheckCircle className="w-3.5 h-3.5 text-emerald-600 mr-1" /> 100% Gratis & Open Source
           </span>

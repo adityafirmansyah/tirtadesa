@@ -220,6 +220,11 @@ export const CatatMeter: React.FC = () => {
             <span>{isOnline ? "Tersambung" : "Offline (Local DB)"}</span>
           </div>
 
+          <div className="hidden sm:flex items-center space-x-1 px-2.5 py-1.5 bg-sky-50 border border-sky-200 rounded-lg text-[11px] font-bold text-sky-800">
+            <Sparkles className="w-3.5 h-3.5 text-sky-600" />
+            <span>AI Meter Scanner Aktif</span>
+          </div>
+
           <button
             onClick={triggerBatchSync}
             disabled={syncing || pendingCount === 0}
