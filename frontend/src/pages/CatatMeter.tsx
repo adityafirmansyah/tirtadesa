@@ -413,9 +413,8 @@ export const CatatMeter: React.FC = () => {
       {/* Edge AI Scanner Modal */}
       {scannerOpen && (
         <MeterCameraScanner
-          onScanComplete={(detectedNum, photo) => {
+          onScanComplete={(detectedNum) => {
             setMeterKini(detectedNum);
-            setFotoBukti(photo);
             if (selectedPelanggan) {
               const lalu = selectedPelanggan.meter_terakhir || 0;
               if (detectedNum < lalu) {

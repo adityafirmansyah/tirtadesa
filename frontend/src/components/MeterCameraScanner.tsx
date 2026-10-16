@@ -89,8 +89,8 @@ export const MeterCameraScanner: React.FC<MeterCameraScannerProps> = ({
   };
 
   const handleApplyResult = () => {
-    if (lastResult && capturedImage) {
-      onScanComplete(lastResult.detectedNumber, capturedImage);
+    if (lastResult) {
+      onScanComplete(lastResult.detectedNumber, "");
       onClose();
     }
   };

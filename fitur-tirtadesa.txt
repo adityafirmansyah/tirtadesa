@@ -1,0 +1,97 @@
+DAFTAR FITUR UTAMA TIRTADESA (tirtadesa.com)
+Aplikasi Pengelolaan Air Bersih & Kas Desa (KPSPAMS / HIPPAM / PAM Desa)
+Bahasa Awam / Non-Teknis
+
+================================================================================
+1. PENCATATAN METERAN AIR (UNTUK PETUGAS KELILING)
+================================================================================
+- Tetap Bisa Dipakai Tanpa Sinyal:
+  Petugas bisa keliling mencatat meteran ke gang atau pelosok desa yang susah
+  sinyal. Data tersimpan aman di HP dan otomatis tersambung saat kembali ke
+  balai desa atau dapat sinyal.
+
+- Scan Angka Pakai Kamera HP (Smart AI):
+  Petugas cukup mengarahkan kamera HP ke angka meteran air, angkanya akan
+  otomatis terbaca tanpa harus repot mengetik satu per satu.
+
+- Peringatan Otomatis Angka Aneh:
+  Kalau pemakaian warga tiba-tiba melonjak sangat tinggi atau angkanya keliru,
+  sistem langsung memunculkan peringatan kuning di layar HP petugas.
+
+
+================================================================================
+2. HITUNG TAGIHAN OTOMATIS & KASIR (UNTUK BENDAHARA)
+================================================================================
+- Tagihan Terbit Sekali Klik:
+  Tidak perlu menghitung manual di Excel. Sekali klik, tagihan air untuk
+  ratusan warga langsung jadi dalam hitungan detik.
+
+- Tarif Air Fleksibel & Bertingkat:
+  Bisa atur biaya bulanan tetap (abonemen), dana pemeliharaan meteran/pipa,
+  denda telat bayar, dan tarif pemakaian berjenjang (misal makin boros pakai
+  air, tarifnya bertingkat).
+
+- Cetak Struk Kuitansi Langsung (Printer Bluetooth Mini):
+  Kasir atau petugas bisa langsung mencetak nota sobekan kasir mini (printer
+  kasir 58mm) langsung dari HP atau laptop sebagai bukti pembayaran sah.
+
+- Pilihan Cara Bayar:
+  Mendukung pencatatan bayar tunai, transfer bank, maupun scan QRIS.
+
+
+================================================================================
+3. BUKU KAS DESA TERBUKA (KEUANGAN RAPI)
+================================================================================
+- Kas Masuk Otomatis:
+  Setiap ada warga yang membayar air, uangnya otomatis masuk ke catatan kas desa.
+
+- Catat Biaya Operasional:
+  Mudah mencatat pengeluaran rutin, seperti beli token listrik pompa PLN,
+  kaporit penjernih air, gaji petugas, dan pembelian pipa sambungan perbaikan.
+
+- Saldo Selalu Pas & Jelas:
+  Total uang masuk, uang keluar, dan sisa kas operasional selalu terpantau
+  otomatis tanpa selisih.
+
+
+================================================================================
+4. LACAK PIPA BOCOR / KEHILANGAN AIR (HEMAT LISTRIK POMPA)
+================================================================================
+- Deteksi Dini Kebocoran:
+  Membandingkan total air yang dipompa dari tandon mata air dengan total air
+  yang tercatat dipakai warga.
+
+- Peringatan Pipa Rusak:
+  Sistem otomatis memberi tahu jika ada selisih air yang hilang terlalu besar,
+  sehingga pengurus tahu ada pipa bawah tanah yang bocor atau sambungan liar
+  sebelum boncos membayar token listrik pompa.
+
+
+================================================================================
+5. LAYANAN WARGA MANDIRI (TANPA PERLU LOGIN / AKUN)
+================================================================================
+- Cek Tagihan Mandiri Lewat HP:
+  Warga desa cukup membuka link website lewat HP dan memasukkan Nomor
+  Sambungan Rumah (SR) atau Nomor WhatsApp untuk melihat tagihan bulan ini
+  beserta nomor rekening pembayaran.
+
+- Laporan Transparansi Kas Desa:
+  Halaman terbuka untuk seluruh warga desa melihat pemakaian air dan saldo
+  kas operasional. Warga jadi percaya dan tidak curiga uang kas disalahgunakan.
+
+- Menjaga Martabat & Privasi Warga:
+  Daftar nama warga yang belum membayar sengaja tidak dipajang di tempat umum
+  demi menjaga privasi dan keharmonisan antar tetangga.
+
+
+================================================================================
+6. KEAMANAN & PENGATURAN PENGURUS
+================================================================================
+- Pembagian Tugas Sesuai Peran:
+  * Petugas: Khusus mencatat meteran keliling dan menerima bayar di tempat.
+  * Bendahara: Mengatur tagihan, tarif air, dan pembukuan kas operasional.
+  * Ketua: Memantau semua laporan, mengatur profil desa, dan mengelola akun staf.
+
+- 100% Gratis & Mandiri (Open Source):
+  Tidak ada biaya langganan bulanan ratusan ribu rupiah seperti software lain.
+  Bisa dipasang selamanya di komputer balai desa atau server desa sendiri.
