@@ -24,6 +24,8 @@ export const Layout: React.FC = () => {
         return "Buku Kas Operasional";
       case "/audit-air":
         return "Audit Neraca Air & Kehilangan (NRW)";
+      case "/pengaturan":
+        return "Pengaturan & Manajemen Akun";
       default:
         return "Sistem Informasi Air";
     }

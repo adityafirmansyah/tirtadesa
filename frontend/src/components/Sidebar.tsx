@@ -12,6 +12,7 @@ import {
   WifiOff,
   ExternalLink,
   ChevronRight,
+  Settings,
   X,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
@@ -60,6 +61,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, setMobileOpen }) =
         { to: "/audit-air", label: "Audit Neraca Air (NRW)", icon: Droplets },
       ],
     },
+    ...(user?.role === "ketua"
+      ? [
+          {
+            title: "Pengaturan Desa",
+            items: [{ to: "/pengaturan", label: "Profil & Akun Staf", icon: Settings }],
+          },
+        ]
+      : []),
   ];
 
   const content = (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Users, Plus, X, Search, CheckCircle } from "lucide-react";
 import { api } from "../api/client";
+import { useAuth } from "../context/AuthContext";
 
 interface PelangganItem {
   id: string;
@@ -20,6 +21,9 @@ interface KategoriItem {
 }
 
 export const Pelanggan: React.FC = () => {
+  const { user } = useAuth();
+  const canManage = user?.role === "ketua" || user?.role === "bendahara";
+
   const [list, setList] = useState<PelangganItem[]>([]);
   const [kategoris, setKategoris] = useState<KategoriItem[]>([]);
   const [search, setSearch] = useState("");
@@ -101,13 +105,15 @@ export const Pelanggan: React.FC = () => {
           <p className="text-xs text-slate-500 mt-0.5">Daftar seluruh warga pelanggan PAM desa / KPSPAMS.</p>
         </div>
 
-        <button
-          onClick={() => setModalOpen(true)}
-          className="flex items-center space-x-1.5 bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition-all shadow-sm"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Tambah Sambungan Baru</span>
-        </button>
+        {canManage && (
+          <button
+            onClick={() => setModalOpen(true)}
+            className="flex items-center space-x-1.5 bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition-all shadow-sm"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Tambah Sambungan Baru</span>
+          </button>
+        )}
       </div>
 
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">

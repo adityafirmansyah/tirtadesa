@@ -8,6 +8,7 @@ import {
   X,
 } from "lucide-react";
 import { api } from "../api/client";
+import { useAuth } from "../context/AuthContext";
 import { printViaBluetooth } from "../lib/thermal";
 
 interface TagihanItem {
@@ -23,6 +24,9 @@ interface TagihanItem {
 }
 
 export const Tagihan: React.FC = () => {
+  const { user } = useAuth();
+  const canGenerateBills = user?.role === "ketua" || user?.role === "bendahara";
+
   const [tagihanList, setTagihanList] = useState<TagihanItem[]>([]);
   const [periode, setPeriode] = useState("2026-10");
   const [statusFilter, setStatusFilter] = useState<string>("");
@@ -120,13 +124,15 @@ export const Tagihan: React.FC = () => {
             onChange={(e) => setPeriode(e.target.value)}
             className="py-1.5 px-3 text-sm border border-slate-300 rounded-lg bg-white"
           />
-          <button
-            onClick={handleGenerateBills}
-            className="flex items-center space-x-1.5 bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm"
-          >
-            <Play className="w-3.5 h-3.5" />
-            <span>Terbitkan Tagihan Bulan Ini</span>
-          </button>
+          {canGenerateBills && (
+            <button
+              onClick={handleGenerateBills}
+              className="flex items-center space-x-1.5 bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm"
+            >
+              <Play className="w-3.5 h-3.5" />
+              <span>Terbitkan Tagihan Bulan Ini</span>
+            </button>
+          )}
         </div>
       </div>
 

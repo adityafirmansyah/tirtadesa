@@ -13,6 +13,7 @@ import { Tagihan } from "./pages/Tagihan";
 import { Pelanggan } from "./pages/Pelanggan";
 import { Kas } from "./pages/Kas";
 import { AuditAir } from "./pages/AuditAir";
+import { Pengaturan } from "./pages/Pengaturan";
 import { PublicCekTagihan } from "./pages/PublicCekTagihan";
 import { PublicTransparansi } from "./pages/PublicTransparansi";
 
@@ -71,6 +72,7 @@ export const App: React.FC = () => {
             <Route path="/pelanggan" element={<Pelanggan />} />
             <Route path="/kas" element={<Kas />} />
             <Route path="/audit-air" element={<AuditAir />} />
+            <Route path="/pengaturan" element={<Pengaturan />} />
           </Route>
 
           {/* Catch-all redirect */}

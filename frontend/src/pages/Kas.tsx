@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Wallet, ArrowDownRight, ArrowUpRight, Plus, X } from "lucide-react";
 import { api } from "../api/client";
+import { useAuth } from "../context/AuthContext";
 
 interface BukuKasItem {
   id: string;
@@ -12,6 +13,9 @@ interface BukuKasItem {
 }
 
 export const Kas: React.FC = () => {
+  const { user } = useAuth();
+  const canManageKas = user?.role === "ketua" || user?.role === "bendahara";
+
   const [list, setList] = useState<BukuKasItem[]>([]);
   const [summary, setSummary] = useState({ total_masuk: 0, total_keluar: 0, saldo: 0 });
   const [modalOpen, setModalOpen] = useState(false);
@@ -80,13 +84,15 @@ export const Kas: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => setModalOpen(true)}
-          className="flex items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition-all shadow-sm"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Catat Biaya Operasional</span>
-        </button>
+        {canManageKas && (
+          <button
+            onClick={() => setModalOpen(true)}
+            className="flex items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition-all shadow-sm"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Catat Biaya Operasional</span>
+          </button>
+        )}
       </div>
 
       {/* Summary Cards */}
