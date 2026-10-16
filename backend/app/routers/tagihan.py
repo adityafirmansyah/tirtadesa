@@ -77,28 +77,39 @@ def generate_monthly_bills(
     year, month = int(parts[0]), int(parts[1])
     due_date = date(year, month, payload.jatuh_tempo_days)
 
+    # 1. Pre-fetch all existing bills for this period in ONE query
+    existing_pelanggan_ids = {
+        r[0]
+        for r in db.query(Tagihan.pelanggan_id)
+        .filter(Tagihan.tenant_id == tenant.id, Tagihan.periode == payload.periode)
+        .all()
+    }
+
+    # 2. Pre-fetch all meter readings for this period in ONE query
+    meter_records = {
+        m.pelanggan_id: m
+        for m in db.query(CatatanMeter)
+        .filter(CatatanMeter.tenant_id == tenant.id, CatatanMeter.periode == payload.periode)
+        .all()
+    }
+
+    # 3. Pre-fetch all tariff categories in ONE query
+    kategori_map = {
+        k.id: k for k in db.query(KategoriTarif).filter(KategoriTarif.tenant_id == tenant.id).all()
+    }
+
     for p in pelanggan_list:
         # Check if already generated
-        existing = (
-            db.query(Tagihan)
-            .filter(Tagihan.pelanggan_id == p.id, Tagihan.periode == payload.periode)
-            .first()
-        )
-        if existing:
+        if p.id in existing_pelanggan_ids:
             skipped_count += 1
             continue
 
-        # Get meter reading for this period
-        meter_rec = (
-            db.query(CatatanMeter)
-            .filter(CatatanMeter.pelanggan_id == p.id, CatatanMeter.periode == payload.periode)
-            .first()
-        )
-
+        # Get meter reading for this period from memory map
+        meter_rec = meter_records.get(p.id)
         usage_m3 = meter_rec.volume_m3 if meter_rec else 0
 
-        # Load tariff category
-        kategori = db.query(KategoriTarif).filter(KategoriTarif.id == p.kategori_id).first()
+        # Load tariff category from memory map
+        kategori = kategori_map.get(p.kategori_id)
         if not kategori:
             continue
 

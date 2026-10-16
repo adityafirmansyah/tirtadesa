@@ -101,28 +101,32 @@ def batch_sync_meter(
     skipped = 0
     errors = []
 
+    # 1. Pre-fetch valid pelanggan IDs in ONE query
+    item_pelanggan_ids = [item.pelanggan_id for item in payload.items]
+    valid_pelanggan_ids = {
+        r[0]
+        for r in db.query(Pelanggan.id)
+        .filter(Pelanggan.id.in_(item_pelanggan_ids), Pelanggan.tenant_id == tenant.id)
+        .all()
+    }
+
+    # 2. Pre-fetch existing meter records in ONE query
+    existing_meters = {
+        (m.pelanggan_id, m.periode): m
+        for m in db.query(CatatanMeter)
+        .filter(CatatanMeter.pelanggan_id.in_(item_pelanggan_ids))
+        .all()
+    }
+
     for item in payload.items:
         try:
-            pelanggan = (
-                db.query(Pelanggan)
-                .filter(Pelanggan.id == item.pelanggan_id, Pelanggan.tenant_id == tenant.id)
-                .first()
-            )
-            if not pelanggan:
+            if item.pelanggan_id not in valid_pelanggan_ids:
                 skipped += 1
                 errors.append(f"Pelanggan {item.nomor_sr} ({item.pelanggan_id}) tidak ditemukan")
                 continue
 
             volume = max(0, item.meter_kini - item.meter_lalu)
-
-            existing = (
-                db.query(CatatanMeter)
-                .filter(
-                    CatatanMeter.pelanggan_id == item.pelanggan_id,
-                    CatatanMeter.periode == item.periode,
-                )
-                .first()
-            )
+            existing = existing_meters.get((item.pelanggan_id, item.periode))
 
             if existing:
                 existing.meter_lalu = item.meter_lalu
