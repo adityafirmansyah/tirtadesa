@@ -8,9 +8,12 @@ import {
   CheckCircle,
   AlertTriangle,
   UploadCloud,
+  Camera,
+  Sparkles,
 } from "lucide-react";
 import { api } from "../api/client";
 import { offlineDb, type OfflineMeterEntry } from "../db/offlineDb";
+import { MeterCameraScanner } from "../components/MeterCameraScanner";
 
 interface PelangganItem {
   id: string;
@@ -32,6 +35,7 @@ export const CatatMeter: React.FC = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [alertWarning, setAlertWarning] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [scannerOpen, setScannerOpen] = useState(false);
 
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
@@ -320,18 +324,38 @@ export const CatatMeter: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
-                  Angka Meteran Baru (Kini)
-                </label>
-                <input
-                  type="number"
-                  required
-                  autoFocus
-                  placeholder="Masukkan angka meteran air fisik"
-                  value={meterKini}
-                  onChange={(e) => handleMeterChange(e.target.value)}
-                  className="w-full text-lg font-mono py-2.5 px-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none"
-                />
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 uppercase">
+                    Angka Meteran Baru (Kini)
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setScannerOpen(true)}
+                    className="inline-flex items-center space-x-1 text-[11px] font-bold text-sky-700 hover:text-sky-800 bg-sky-50 hover:bg-sky-100 border border-sky-200 px-2 py-1 rounded-lg transition-colors"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-sky-600" />
+                    <span>Pindai AI (Kamera)</span>
+                  </button>
+                </div>
+                <div className="relative">
+                  <input
+                    type="number"
+                    required
+                    autoFocus
+                    placeholder="Masukkan angka meteran air fisik"
+                    value={meterKini}
+                    onChange={(e) => handleMeterChange(e.target.value)}
+                    className="w-full text-lg font-mono py-2.5 pl-3 pr-10 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setScannerOpen(true)}
+                    className="absolute right-2 top-2 p-1 text-slate-400 hover:text-sky-600"
+                    title="Pindai meteran pakai kamera"
+                  >
+                    <Camera className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
 
               {alertWarning && (
@@ -381,6 +405,24 @@ export const CatatMeter: React.FC = () => {
           )}
         </div>
       </div>
+      {/* Edge AI Scanner Modal */}
+      {scannerOpen && (
+        <MeterCameraScanner
+          onScanComplete={(detectedNum, photo) => {
+            setMeterKini(detectedNum);
+            setFotoBukti(photo);
+            if (selectedPelanggan) {
+              const lalu = selectedPelanggan.meter_terakhir || 0;
+              if (detectedNum < lalu) {
+                setAlertWarning(
+                  `Hasil pindai AI (${detectedNum}) lebih kecil dari meter lalu (${lalu}). Silakan periksa kembali angka meteran.`
+                );
+              }
+            }
+          }}
+          onClose={() => setScannerOpen(false)}
+        />
+      )}
     </div>
   );
 };
